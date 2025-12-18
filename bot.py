@@ -8,12 +8,12 @@ from config import BOT_TOKEN
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "✅ Bot is running!\n\nSend /buy to subscribe"
+        "✅ Bot is running successfully!"
     )
 
 async def buy(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "💰 Payment via UPI\nSend screenshot after payment"
+        "💰 Pay via UPI and send screenshot"
     )
 
 def main():
@@ -22,7 +22,7 @@ def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("buy", buy))
 
-    print("🤖 Bot Started Successfully")
+    print("🤖 Bot Started")
     app.run_polling()
 
 if __name__ == "__main__":
