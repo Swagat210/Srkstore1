@@ -1,9 +1,9 @@
 import os
 
-BOT_TOKEN = os.getenv("8091152431:AAH9tplltohYVFS4OlbXJTontRoSz_te35Q")
-ADMIN_ID = int(os.getenv("7990200132"))
-CHANNEL_ID = int(os.getenv("1003692549136"))
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+ADMIN_ID = int(os.getenv("ADMIN_ID"))
+CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 
-UPI_ID = os.getenv("7205105264@ibl")
-PLAN_PRICE = int(os.getenv("PLAN_PRICE", 99)) 
+UPI_ID = os.getenv("UPI_ID")
+PLAN_PRICE = int(os.getenv("PLAN_PRICE", 99))
 PLAN_DAYS = int(os.getenv("PLAN_DAYS", 30))
