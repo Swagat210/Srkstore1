@@ -1,44 +1,29 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, MessageHandler, filters
-from config import *
+from telegram import Update
+from telegram.ext import (
+    ApplicationBuilder,
+    CommandHandler,
+    ContextTypes
+)
+from config import BOT_TOKEN
 
-async def start(update: Update, context):
-    keyboard = [
-        [InlineKeyboardButton("Subscribe ₹99 / 30 Days", callback_data="pay")]
-    ]
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Premium Content Unlock 🔓",
-        reply_markup=InlineKeyboardMarkup(keyboard)
+        "✅ Bot is running!\n\nSend /buy to subscribe"
     )
 
-async def pay(update: Update, context):
-    query = update.callback_query
-    await query.answer()
-    text = f"""
-Pay ₹{PLAN_PRICE}
-
-UPI ID:
-{UPI_ID}
-
-After payment send your *UTR number*
-"""
-    await query.message.reply_text(text, parse_mode="Markdown")
-
-async def utr_handler(update: Update, context):
-    utr = update.message.text
-    if len(utr) < 10:
-        await update.message.reply_text("❌ Invalid UTR")
-        return
-
-    await context.bot.send_message(
-        chat_id=CHANNEL_ID,
-        text=f"User {update.message.from_user.id} paid\nUTR: {utr}"
+async def buy(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "💰 Payment via UPI\nSend screenshot after payment"
     )
 
-    await update.message.reply_text("✅ Payment received\nAccess granted")
+def main():
+    app = ApplicationBuilder().token(BOT_TOKEN).build()
 
-app = ApplicationBuilder().token(BOT_TOKEN).build()
-app.add_handler(CommandHandler("start", start))
-app.add_handler(CallbackQueryHandler(pay, pattern="pay"))
-app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, utr_handler))
-app.run_polling()
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("buy", buy))
+
+    print("🤖 Bot Started Successfully")
+    app.run_polling()
+
+if __name__ == "__main__":
+    main()
